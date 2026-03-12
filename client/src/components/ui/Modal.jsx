@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { cn } from '../../utils/format';
 
-const Modal = ({ open, onClose, title, children, size = 'md' }) => {
+const Modal = ({ isOpen, open, onClose, title, children, size = 'md' }) => {
+  const visible = isOpen ?? open;
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden';
+    if (visible) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
     return () => { document.body.style.overflow = ''; };
-  }, [open]);
+  }, [visible]);
 
-  if (!open) return null;
+  if (!visible) return null;
 
   const sizes = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg', xl: 'max-w-xl', '2xl': 'max-w-2xl' };
 

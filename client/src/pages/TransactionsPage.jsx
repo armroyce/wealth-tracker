@@ -208,10 +208,10 @@ const TransactionsPage = () => {
         </div>
         <div className="flex gap-2">
           <button onClick={handleExport} className="btn-secondary flex items-center gap-2 text-sm">
-            <ArrowDownTrayIcon className="w-4 h-4" /> Export
+            <ArrowUpTrayIcon className="w-4 h-4" /> Export
           </button>
           <button onClick={() => fileRef.current.click()} className="btn-secondary flex items-center gap-2 text-sm">
-            <ArrowUpTrayIcon className="w-4 h-4" /> Import
+            <ArrowDownTrayIcon className="w-4 h-4" /> Import
           </button>
           <input ref={fileRef} type="file" accept=".csv" className="hidden" onChange={handleImport} />
           <button onClick={openCreate} className="btn-primary flex items-center gap-2">
