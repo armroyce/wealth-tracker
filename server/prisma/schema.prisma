@@ -1,0 +1,187 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  currency     String   @default("USD")
+  theme        String   @default("dark")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  accounts          Account[]
+  transactions      Transaction[]
+  investments       Investment[]
+  budgets           Budget[]
+  debts             Debt[]
+  goals             Goal[]
+  networthSnapshots NetWorthSnapshot[]
+  refreshTokens     RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  type         AccountType
+  balance      Float    @default(0)
+  currency     String   @default("USD")
+  institution  String?
+  accountNumber String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  transactions Transaction[]
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  BROKERAGE
+  CRYPTO
+  REAL_ESTATE
+  RETIREMENT
+  CREDIT_CARD
+  LOAN
+  OTHER
+}
+
+model Transaction {
+  id          String          @id @default(uuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId   String?
+  account     Account?        @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  amount      Float
+  category    String
+  type        TransactionType
+  date        DateTime
+  notes       String?
+  merchant    String?
+  isRecurring Boolean         @default(false)
+  recurringInterval String?   // daily, weekly, monthly, yearly
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+}
+
+model Investment {
+  id            String         @id @default(uuid())
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ticker        String
+  name          String
+  shares        Float
+  purchasePrice Float
+  currentPrice  Float          @default(0)
+  type          InvestmentType
+  purchaseDate  DateTime?
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+enum InvestmentType {
+  STOCK
+  ETF
+  CRYPTO
+  REAL_ESTATE
+  BOND
+  MUTUAL_FUND
+  OTHER
+}
+
+model Budget {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category     String
+  monthlyLimit Float
+  month        Int      // 1-12
+  year         Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, category, month, year])
+}
+
+model Debt {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  balance        Float
+  originalBalance Float?
+  interestRate   Float
+  minimumPayment Float
+  type           DebtType
+  dueDate        DateTime?
+  notes          String?
+  isPaidOff      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+enum DebtType {
+  CREDIT_CARD
+  STUDENT_LOAN
+  MORTGAGE
+  CAR_LOAN
+  PERSONAL_LOAN
+  MEDICAL
+  OTHER
+}
+
+model Goal {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  targetAmount  Float
+  currentAmount Float    @default(0)
+  deadline      DateTime?
+  category      String?
+  notes         String?
+  isCompleted   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model NetWorthSnapshot {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalAssets      Float
+  totalLiabilities Float
+  liquidAssets     Float    @default(0)
+  investments      Float    @default(0)
+  realEstate       Float    @default(0)
+  date             DateTime @default(now())
+  createdAt        DateTime @default(now())
+}
