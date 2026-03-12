@@ -25,13 +25,11 @@ app.use(helmet({
   contentSecurityPolicy: false, // React needs inline scripts in dev
 }));
 
-// CORS — only needed in dev (in prod React is served from same origin)
-if (!isProduction) {
-  app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
-    credentials: true,
-  }));
-}
+// CORS — allow configured client origin in all environments
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true,
+}));
 
 // Rate limiting
 const limiter = rateLimit({
