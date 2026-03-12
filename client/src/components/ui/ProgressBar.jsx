@@ -1,24 +1,24 @@
 import React from 'react';
 import { cn } from '../../utils/format';
 
+const gradients = {
+  brand: 'from-brand-400 to-brand-600',
+  green: 'from-emerald-400 to-teal-500',
+  amber: 'from-amber-400 to-orange-500',
+  red:   'from-red-400 to-rose-500',
+  blue:  'from-blue-400 to-cyan-500',
+};
+
 const ProgressBar = ({ value, max = 100, color = 'brand', size = 'md', showLabel = false, label }) => {
   const pct = Math.min((value / max) * 100, 100);
 
-  const colors = {
-    brand: 'bg-brand-500',
-    green: 'bg-emerald-500',
-    amber: 'bg-amber-500',
-    red:   'bg-red-500',
-    blue:  'bg-blue-500',
-  };
-
-  const getColor = () => {
+  const getGradient = () => {
     if (color === 'auto') {
-      if (pct >= 90) return 'bg-red-500';
-      if (pct >= 75) return 'bg-amber-500';
-      return 'bg-emerald-500';
+      if (pct >= 90) return gradients.red;
+      if (pct >= 75) return gradients.amber;
+      return gradients.green;
     }
-    return colors[color] || colors.brand;
+    return gradients[color] || gradients.brand;
   };
 
   const sizes = { sm: 'h-1.5', md: 'h-2', lg: 'h-3' };
@@ -33,9 +33,15 @@ const ProgressBar = ({ value, max = 100, color = 'brand', size = 'md', showLabel
       )}
       <div className={cn('w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden', sizes[size])}>
         <div
-          className={cn('h-full rounded-full transition-all duration-500', getColor())}
+          className={cn(
+            'h-full rounded-full bg-gradient-to-r transition-all duration-700 ease-out relative overflow-hidden',
+            getGradient(),
+          )}
           style={{ width: `${pct}%` }}
-        />
+        >
+          {/* shimmer shine */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
+        </div>
       </div>
     </div>
   );
