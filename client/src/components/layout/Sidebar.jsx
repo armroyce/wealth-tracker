@@ -5,7 +5,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { cn } from '../../utils/format';
 import {
   HomeIcon, BanknotesIcon, ArrowsRightLeftIcon, ChartBarIcon,
-  WalletIcon, CreditCardIcon, FlagIcon, ChartLineIcon,
+  WalletIcon, CreditCardIcon, FlagIcon, PresentationChartLineIcon,
   DocumentChartBarIcon, SunIcon, MoonIcon, ArrowRightOnRectangleIcon,
   Bars3Icon, XMarkIcon, UserCircleIcon,
 } from '@heroicons/react/24/outline';
@@ -18,7 +18,7 @@ const navItems = [
   { path: '/budget',      label: 'Budget',       icon: WalletIcon },
   { path: '/debts',       label: 'Debts',        icon: CreditCardIcon },
   { path: '/goals',       label: 'Goals',        icon: FlagIcon },
-  { path: '/networth',    label: 'Net Worth',    icon: ChartLineIcon },
+  { path: '/networth',    label: 'Net Worth',    icon: PresentationChartLineIcon },
   { path: '/reports',     label: 'Reports',      icon: DocumentChartBarIcon },
 ];
 

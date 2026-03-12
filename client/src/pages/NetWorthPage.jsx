@@ -7,7 +7,7 @@ import { useApi, useMutation } from '../hooks/useApi';
 import { useAuth } from '../context/AuthContext';
 import StatCard from '../components/ui/StatCard';
 import { formatCurrency, formatDate } from '../utils/format';
-import { ChartLineIcon, CameraIcon } from '@heroicons/react/24/outline';
+import { PresentationChartLineIcon, CameraIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 
 const CustomTooltip = ({ active, payload, label, currency }) => {
@@ -146,7 +146,7 @@ const NetWorthPage = () => {
           <div className="skeleton h-64" />
         ) : chartData.length < 2 ? (
           <div className="flex flex-col items-center justify-center h-48 text-center">
-            <ChartLineIcon className="w-12 h-12 text-gray-300 mb-3" />
+            <PresentationChartLineIcon className="w-12 h-12 text-gray-300 mb-3" />
             <p className="text-sm text-gray-400">Take your first snapshot to start tracking net worth over time.</p>
             <button onClick={handleSnapshot} className="btn-primary mt-3 text-sm">Take Snapshot</button>
           </div>
