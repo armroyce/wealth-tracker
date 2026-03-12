@@ -9,8 +9,20 @@ import StatCard from '../components/ui/StatCard';
 import ProgressBar from '../components/ui/ProgressBar';
 import { formatCurrency, formatDate } from '../utils/format';
 import {
-  BanknotesIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon, ChartBarIcon,
+  BanknotesIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon, ChartBarIcon, BellAlertIcon,
 } from '@heroicons/react/24/outline';
+import { INSURANCE_TYPE_LABELS } from '../utils/format';
+
+const getRenewalColor = (days) => {
+  if (days <= 15) return 'bg-red-100 dark:bg-red-900/30 text-red-600';
+  if (days <= 30) return 'bg-amber-100 dark:bg-amber-900/30 text-amber-600';
+  return 'bg-blue-100 dark:bg-blue-900/30 text-blue-600';
+};
+
+const TYPE_EMOJI = {
+  HEALTH: '🏥', TERM_LIFE: '🛡️', WHOLE_LIFE: '💼', CAR: '🚗',
+  BIKE: '🏍️', HOME: '🏠', TRAVEL: '✈️', OTHER: '📋',
+};
 
 const CustomTooltip = ({ active, payload, label, currency }) => {
   if (!active || !payload?.length) return null;
@@ -103,6 +115,27 @@ const DashboardPage = () => {
           loading={loading}
         />
       </div>
+
+      {/* Insurance Reminders */}
+      {d.insuranceReminders?.length > 0 && (
+        <div className="card border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/10">
+          <div className="flex items-center gap-2 mb-3">
+            <BellAlertIcon className="w-5 h-5 text-amber-600" />
+            <h2 className="font-semibold text-amber-800 dark:text-amber-400">Insurance Renewals Coming Up</h2>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {d.insuranceReminders.map(p => (
+              <div key={p.id} className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm ${getRenewalColor(p.daysUntilRenewal)}`}>
+                <span>{TYPE_EMOJI[p.type]}</span>
+                <span className="font-medium">{p.name}</span>
+                <span className="font-bold">
+                  {p.daysUntilRenewal === 0 ? 'Today!' : `${p.daysUntilRenewal}d`}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Income vs Expenses Chart */}

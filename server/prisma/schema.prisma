@@ -27,6 +27,8 @@ model User {
   goals             Goal[]
   networthSnapshots NetWorthSnapshot[]
   refreshTokens     RefreshToken[]
+  physicalAssets    PhysicalAsset[]
+  insurances        Insurance[]
 }
 
 model RefreshToken {
@@ -184,4 +186,62 @@ model NetWorthSnapshot {
   realEstate       Float    @default(0)
   date             DateTime @default(now())
   createdAt        DateTime @default(now())
+}
+
+model PhysicalAsset {
+  id            String            @id @default(uuid())
+  userId        String
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  type          PhysicalAssetType
+  currentValue  Float
+  purchaseValue Float?
+  purchaseDate  DateTime?
+  notes         String?
+  isActive      Boolean           @default(true)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+enum PhysicalAssetType {
+  HOUSE
+  LAND
+  GOLD
+  SILVER
+  CAR
+  BIKE
+  JEWELLERY
+  ELECTRONICS
+  ART
+  OTHER
+}
+
+model Insurance {
+  id               String        @id @default(uuid())
+  userId           String
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name             String
+  type             InsuranceType
+  provider         String?
+  policyNumber     String?
+  premium          Float
+  premiumInterval  String        @default("yearly")
+  coverageAmount   Float?
+  startDate        DateTime?
+  renewalDate      DateTime
+  notes            String?
+  isActive         Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+enum InsuranceType {
+  HEALTH
+  TERM_LIFE
+  WHOLE_LIFE
+  CAR
+  BIKE
+  HOME
+  TRAVEL
+  OTHER
 }

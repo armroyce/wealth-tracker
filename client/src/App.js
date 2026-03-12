@@ -16,6 +16,8 @@ import DebtsPage from './pages/DebtsPage';
 import GoalsPage from './pages/GoalsPage';
 import NetWorthPage from './pages/NetWorthPage';
 import ReportsPage from './pages/ReportsPage';
+import PhysicalAssetsPage from './pages/PhysicalAssetsPage';
+import InsurancePage from './pages/InsurancePage';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -51,6 +53,8 @@ const AppRoutes = () => (
     <Route path="/goals" element={<ProtectedRoute><GoalsPage /></ProtectedRoute>} />
     <Route path="/networth" element={<ProtectedRoute><NetWorthPage /></ProtectedRoute>} />
     <Route path="/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
+    <Route path="/physical-assets" element={<ProtectedRoute><PhysicalAssetsPage /></ProtectedRoute>} />
+    <Route path="/insurance" element={<ProtectedRoute><InsurancePage /></ProtectedRoute>} />
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 );

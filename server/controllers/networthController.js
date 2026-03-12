@@ -5,10 +5,11 @@ const getNetWorth = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const [accounts, investments, debts] = await Promise.all([
+    const [accounts, investments, debts, physicalAssets] = await Promise.all([
       prisma.account.findMany({ where: { userId, isActive: true } }),
       prisma.investment.findMany({ where: { userId } }),
       prisma.debt.findMany({ where: { userId, isPaidOff: false } }),
+      prisma.physicalAsset.findMany({ where: { userId, isActive: true } }),
     ]);
 
     const liquidAssets = accounts
@@ -29,7 +30,9 @@ const getNetWorth = async (req, res) => {
       .filter(a => !['CHECKING', 'SAVINGS', 'REAL_ESTATE', 'RETIREMENT'].includes(a.type))
       .reduce((s, a) => s + Math.max(0, a.balance), 0);
 
-    const totalAssets = liquidAssets + investmentValue + realEstate + retirement + otherAssets;
+    const physicalAssetValue = physicalAssets.reduce((s, a) => s + a.currentValue, 0);
+
+    const totalAssets = liquidAssets + investmentValue + realEstate + retirement + otherAssets + physicalAssetValue;
     const totalLiabilities = debts.reduce((s, d) => s + d.balance, 0);
     const netWorth = totalAssets - totalLiabilities;
 
@@ -43,6 +46,7 @@ const getNetWorth = async (req, res) => {
         realEstate,
         retirement,
         otherAssets,
+        physicalAssets: physicalAssetValue,
         debts: totalLiabilities,
       },
     });
@@ -75,10 +79,11 @@ const takeSnapshot = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const [accounts, investments, debts] = await Promise.all([
+    const [accounts, investments, debts, physicalAssets] = await Promise.all([
       prisma.account.findMany({ where: { userId, isActive: true } }),
       prisma.investment.findMany({ where: { userId } }),
       prisma.debt.findMany({ where: { userId, isPaidOff: false } }),
+      prisma.physicalAsset.findMany({ where: { userId, isActive: true } }),
     ]);
 
     const liquidAssets = accounts
@@ -90,7 +95,8 @@ const takeSnapshot = async (req, res) => {
       .filter(a => a.type === 'REAL_ESTATE')
       .reduce((s, a) => s + a.balance, 0);
 
-    const totalAssets = accounts.reduce((s, a) => s + Math.max(0, a.balance), 0) + investmentValue;
+    const physicalAssetValue = physicalAssets.reduce((s, a) => s + a.currentValue, 0);
+    const totalAssets = accounts.reduce((s, a) => s + Math.max(0, a.balance), 0) + investmentValue + physicalAssetValue;
     const totalLiabilities = debts.reduce((s, d) => s + d.balance, 0);
 
     const snapshot = await prisma.netWorthSnapshot.create({

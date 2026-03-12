@@ -79,3 +79,27 @@ export const DEBT_TYPE_LABELS = {
   MEDICAL: 'Medical',
   OTHER: 'Other',
 };
+
+export const PHYSICAL_ASSET_TYPE_LABELS = {
+  HOUSE: 'House',
+  LAND: 'Land',
+  GOLD: 'Gold',
+  SILVER: 'Silver',
+  CAR: 'Car',
+  BIKE: 'Bike',
+  JEWELLERY: 'Jewellery',
+  ELECTRONICS: 'Electronics',
+  ART: 'Art',
+  OTHER: 'Other',
+};
+
+export const INSURANCE_TYPE_LABELS = {
+  HEALTH: 'Health',
+  TERM_LIFE: 'Term Life',
+  WHOLE_LIFE: 'Whole Life',
+  CAR: 'Car',
+  BIKE: 'Bike',
+  HOME: 'Home',
+  TRAVEL: 'Travel',
+  OTHER: 'Other',
+};

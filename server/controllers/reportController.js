@@ -134,6 +134,9 @@ const getDashboardData = async (req, res) => {
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
+    const sixtyDaysFromNow = new Date();
+    sixtyDaysFromNow.setDate(sixtyDaysFromNow.getDate() + 60);
+
     const [
       accounts,
       recentTransactions,
@@ -142,6 +145,8 @@ const getDashboardData = async (req, res) => {
       investments,
       debts,
       goals,
+      physicalAssets,
+      upcomingInsurances,
     ] = await Promise.all([
       prisma.account.findMany({ where: { userId, isActive: true } }),
       prisma.transaction.findMany({
@@ -159,10 +164,16 @@ const getDashboardData = async (req, res) => {
       prisma.investment.findMany({ where: { userId } }),
       prisma.debt.findMany({ where: { userId, isPaidOff: false } }),
       prisma.goal.findMany({ where: { userId, isCompleted: false }, take: 4 }),
+      prisma.physicalAsset.findMany({ where: { userId, isActive: true } }),
+      prisma.insurance.findMany({
+        where: { userId, isActive: true, renewalDate: { gte: now, lte: sixtyDaysFromNow } },
+        orderBy: { renewalDate: 'asc' },
+      }),
     ]);
 
     const totalAssets = accounts.reduce((s, a) => s + Math.max(0, a.balance), 0)
-      + investments.reduce((s, i) => s + i.shares * i.currentPrice, 0);
+      + investments.reduce((s, i) => s + i.shares * i.currentPrice, 0)
+      + physicalAssets.reduce((s, a) => s + a.currentValue, 0);
     const totalLiabilities = debts.reduce((s, d) => s + d.balance, 0);
 
     const monthlyIncome = monthlyTransactions.filter(t => t.type === 'INCOME').reduce((s, t) => s + t.amount, 0);
@@ -206,6 +217,10 @@ const getDashboardData = async (req, res) => {
         totalValue: investments.reduce((s, i) => s + i.shares * i.currentPrice, 0),
         count: investments.length,
       },
+      insuranceReminders: upcomingInsurances.map(p => ({
+        ...p,
+        daysUntilRenewal: Math.ceil((new Date(p.renewalDate) - now) / 86400000),
+      })),
     });
   } catch (err) {
     console.error(err);

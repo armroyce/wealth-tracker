@@ -93,6 +93,7 @@ const NetWorthPage = () => {
               { label: 'Investments', value: breakdown.investments, color: 'bg-brand-500' },
               { label: 'Real Estate', value: breakdown.realEstate, color: 'bg-orange-500' },
               { label: 'Retirement', value: breakdown.retirement, color: 'bg-purple-500' },
+              { label: 'Physical Assets', value: breakdown.physicalAssets, color: 'bg-teal-500' },
               { label: 'Other Assets', value: breakdown.otherAssets, color: 'bg-gray-400' },
             ].map(item => {
               const pct = nw.totalAssets > 0 ? (item.value / nw.totalAssets) * 100 : 0;

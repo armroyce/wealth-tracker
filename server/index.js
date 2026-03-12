@@ -15,6 +15,8 @@ const debtRoutes = require('./routes/debts');
 const goalRoutes = require('./routes/goals');
 const networthRoutes = require('./routes/networth');
 const reportRoutes = require('./routes/reports');
+const physicalAssetRoutes = require('./routes/physicalAssets');
+const insuranceRoutes = require('./routes/insurances');
 
 const app = express();
 
@@ -69,6 +71,8 @@ app.use('/api/debts', debtRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/networth', networthRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/physical-assets', physicalAssetRoutes);
+app.use('/api/insurances', insuranceRoutes);
 
 // Serve React build in production
 if (isProduction) {

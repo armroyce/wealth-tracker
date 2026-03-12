@@ -7,7 +7,7 @@ import {
   HomeIcon, BanknotesIcon, ArrowsRightLeftIcon, ChartBarIcon,
   WalletIcon, CreditCardIcon, FlagIcon, PresentationChartLineIcon,
   DocumentChartBarIcon, SunIcon, MoonIcon, ArrowRightOnRectangleIcon,
-  Bars3Icon, XMarkIcon, UserCircleIcon,
+  Bars3Icon, XMarkIcon, UserCircleIcon, BuildingOffice2Icon, ShieldCheckIcon,
 } from '@heroicons/react/24/outline';
 
 const navItems = [
@@ -18,8 +18,10 @@ const navItems = [
   { path: '/budget',      label: 'Budget',       icon: WalletIcon },
   { path: '/debts',       label: 'Debts',        icon: CreditCardIcon },
   { path: '/goals',       label: 'Goals',        icon: FlagIcon },
-  { path: '/networth',    label: 'Net Worth',    icon: PresentationChartLineIcon },
-  { path: '/reports',     label: 'Reports',      icon: DocumentChartBarIcon },
+  { path: '/networth',        label: 'Net Worth',    icon: PresentationChartLineIcon },
+  { path: '/physical-assets', label: 'Assets',       icon: BuildingOffice2Icon },
+  { path: '/insurance',       label: 'Insurance',    icon: ShieldCheckIcon },
+  { path: '/reports',         label: 'Reports',      icon: DocumentChartBarIcon },
 ];
 
 const NavItem = ({ path, label, icon: Icon, collapsed, onClick }) => (
