@@ -101,7 +101,7 @@ const CATEGORY_ICONS = {
 
 const GoalsPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const { data, loading, refetch } = useApi('/goals');
   const { mutate, loading: saving } = useMutation();
   const [modal, setModal] = useState(null);

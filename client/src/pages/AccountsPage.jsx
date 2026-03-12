@@ -23,7 +23,7 @@ const ACCOUNT_COLORS = {
   OTHER: 'bg-gray-100 dark:bg-gray-800 text-gray-500',
 };
 
-const defaultForm = { name: '', type: 'CHECKING', balance: '', currency: 'USD', institution: '' };
+const defaultForm = { name: '', type: 'CHECKING', balance: '', currency: 'INR', institution: '' };
 
 const AccountForm = ({ form, setForm, onSubmit, loading, onClose }) => (
   <form onSubmit={onSubmit} className="space-y-4">
@@ -42,7 +42,7 @@ const AccountForm = ({ form, setForm, onSubmit, loading, onClose }) => (
       <div>
         <label className="label">Currency</label>
         <select className="input" value={form.currency} onChange={e => setForm(f => ({ ...f, currency: e.target.value }))}>
-          {['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'].map(c => <option key={c} value={c}>{c}</option>)}
+          {['INR', 'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'].map(c => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
     </div>
@@ -67,7 +67,7 @@ const AccountForm = ({ form, setForm, onSubmit, loading, onClose }) => (
 
 const AccountsPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const { data, loading, refetch } = useApi('/accounts');
   const { mutate, loading: saving } = useMutation();
   const [modal, setModal] = useState(null); // null | 'create' | 'edit'

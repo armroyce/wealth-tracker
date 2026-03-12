@@ -68,7 +68,7 @@ const InvestmentForm = ({ form, setForm, onSubmit, loading, onClose }) => (
 
 const InvestmentsPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const { data, loading, refetch } = useApi('/investments');
   const { data: allocData, refetch: refetchAlloc } = useApi('/investments/allocation');
   const { mutate, loading: saving } = useMutation();

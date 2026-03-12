@@ -2,7 +2,7 @@ import React from 'react';
 import { cn, formatCurrency } from '../../utils/format';
 import { ArrowTrendingUpIcon, ArrowTrendingDownIcon } from '@heroicons/react/24/outline';
 
-const StatCard = ({ title, value, subtitle, change, changeLabel, icon: Icon, color = 'brand', currency = 'USD', loading }) => {
+const StatCard = ({ title, value, subtitle, change, changeLabel, icon: Icon, color = 'brand', currency = 'INR', loading }) => {
   const colors = {
     brand: 'bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400',
     green: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400',

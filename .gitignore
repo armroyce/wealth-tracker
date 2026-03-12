@@ -5,3 +5,6 @@ server/public/
 server/uploads/
 *.log
 .DS_Store
+.claude/
+WealthTracker_Project_Reference.docx
+~$*

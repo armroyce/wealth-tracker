@@ -103,7 +103,7 @@ const TransactionForm = ({ form, setForm, accounts, onSubmit, loading, onClose }
 
 const TransactionsPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({ type: '', category: '', search: '', startDate: '', endDate: '' });
   const [modal, setModal] = useState(null);

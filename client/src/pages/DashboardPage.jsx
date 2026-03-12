@@ -50,7 +50,7 @@ const TransactionRow = ({ transaction, currency }) => (
 
 const DashboardPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const { data, loading } = useApi('/reports/dashboard');
 
   const d = data || {};

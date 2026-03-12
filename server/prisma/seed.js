@@ -15,7 +15,7 @@ async function main() {
       email: 'demo@wealthtracker.com',
       passwordHash,
       name: 'Demo User',
-      currency: 'USD',
+      currency: 'INR',
     },
   });
 

@@ -16,7 +16,7 @@ const now = new Date();
 
 const ReportsPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const [view, setView] = useState('monthly');
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [year, setYear] = useState(now.getFullYear());

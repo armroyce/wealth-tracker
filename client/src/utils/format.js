@@ -1,5 +1,6 @@
-export const formatCurrency = (amount, currency = 'USD', compact = false) => {
+export const formatCurrency = (amount, currency = 'INR', compact = false) => {
   if (amount === null || amount === undefined) return '--';
+  const locale = currency === 'INR' ? 'en-IN' : 'en-US';
   const opts = {
     style: 'currency',
     currency,
@@ -8,7 +9,7 @@ export const formatCurrency = (amount, currency = 'USD', compact = false) => {
       maximumFractionDigits: 1,
     }),
   };
-  return new Intl.NumberFormat('en-US', opts).format(amount);
+  return new Intl.NumberFormat(locale, opts).format(amount);
 };
 
 export const formatPercent = (value, decimals = 1) => {

@@ -26,7 +26,7 @@ const CustomTooltip = ({ active, payload, label, currency }) => {
 
 const NetWorthPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const [months, setMonths] = useState(12);
   const { data: nwData, loading } = useApi('/networth');
   const { data: histData, loading: histLoading, refetch: refetchHist } = useApi('/networth/history', { params: { months } });

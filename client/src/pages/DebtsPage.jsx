@@ -61,7 +61,7 @@ const DebtForm = ({ form, setForm, onSubmit, loading, onClose }) => (
 
 const DebtsPage = () => {
   const { user } = useAuth();
-  const currency = user?.currency || 'USD';
+  const currency = user?.currency || 'INR';
   const { data, loading, refetch } = useApi('/debts');
   const { data: payoffData, refetch: refetchPlan } = useApi('/debts/payoff-plan', { params: { method: 'avalanche' } });
   const { mutate, loading: saving } = useMutation();

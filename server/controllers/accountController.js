@@ -22,7 +22,7 @@ const createAccount = async (req, res) => {
         name,
         type,
         balance: parseFloat(balance) || 0,
-        currency: currency || 'USD',
+        currency: currency || 'INR',
         institution,
         accountNumber,
       },
